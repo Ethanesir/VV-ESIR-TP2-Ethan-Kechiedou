@@ -41,7 +41,7 @@ public class Main {
             for (File file : projectDir.listFiles((dir, name) -> name.endsWith(".java"))) {
                 CompilationUnit cu = StaticJavaParser.parse(file);
 
-                // Utilise un Visiteur pour traverser l'AST et extraire les informations des champs
+                // Utilise un Visiteur pour traverser l'AST et extraire les informations des methodes
                 cu.accept(new FieldVisitor(fields, file.getPath()), null);
             }
         } catch (IOException e) {
@@ -67,7 +67,7 @@ public class Main {
         }
     }
 
-    // Classe pour contenir les informations des champs
+    // Classe pour contenir les informations des methodes
     private static class FieldInfo {
         private final String name;
         private final String declaringClass;
@@ -92,7 +92,7 @@ public class Main {
         }
     }
 
-    // Visiteur qui extrait les informations des champs
+    // Visiteur qui extrait les informations des methodes
     private static class FieldVisitor extends VoidVisitorAdapter<Void> {
         private final List<FieldInfo> fields;
         private final String filePath;
